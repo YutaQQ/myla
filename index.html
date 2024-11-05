@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Holiday Planner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>วันหยุดสุดหรรษา</h1>
+        <p>หยุดแบบไม่ต้องกลัว มส. อิอิ</p>
+    </header>
+    
+    <section id="dashboard">
+        <h2>เลือกวันหรือวิชาที่ต้องการหยุด</h2>
+        <br>
+        <div id="image-container">
+            <img src="photo/table.png" alt="Table of Course Leaves" style="max-width: 100%; height: auto;">
+        </div>
+        <br>
+        <div id="day-selection">
+            <label for="leave-day">เลือกวัน:</label>
+            <select id="leave-day">
+                <option value="">---</option>
+                <option value="monday">วันจันทร์</option>
+                <option value="tuesday">วันอังคาร</option>
+                <option value="wednesday">วันพุธ</option>
+                <option value="thursday">วันพฤหัสบดี</option>
+                <option value="friday">วันศุกร์</option>
+            </select>
+            <button id="add-leave-day">ตกลง (สำหรับแบบรายวัน)</button>
+        </div>
+        
+        <div id="course-selection">
+            <label for="course">เลือกวิชา:</label>
+            <select id="course">
+                <option value="">---</option>
+                <option value="chemistry">เคมี</option>
+                <option value="astronomy">ดาราศาสตร์</option>
+                <option value="biology">ชีวะ</option>
+                <option value="physics">ฟิสิกส์</option>
+                <option value="math">คณิตศาสตร์</option>
+                <option value="englishForDevelopment">English for Development(ครูโจ)</option>
+                <option value="thai">ภาษาไทย</option>
+                <option value="computer">คอมพิวเตอร์</option>
+                <option value="healthEducation">สุขศึกษา</option>
+                <option value="art">ศิลปะ</option>
+                <option value="englishMaster">English(ครูวรัญญา)</option>
+                <option value="englishTE">English (Teacher)</option>
+                <option value="library">ห้องสมุด</option>
+                <option value="agriculture">เกษตร</option>
+                <option value="social">สังคม</option>
+            </select>
+            <button id="add-leave-course">ตกลง (สำหรับแบบรายวิชา)</button>
+        </div>
+        
+        <div id="leave-tracker">
+            <h3>ติดตามการลา</h3>
+            <ul id="leave-list"></ul>
+        </div>
+
+        <div id="leave-summary">
+            <h3>จำนวนลาคงเหลือ</h3>
+            <ul id="summary-list"></ul>
+        </div>
+        
+        <!-- Reset Button -->
+        <button id="reset-leave">รีเซ็ททั้งหมด</button>
+        
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
