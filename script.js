@@ -1,20 +1,21 @@
 // Leave limits for each course
 const leaveLimits = {
-    chemistry: 12,
-    astronomy: 8,
-    biology: 12,
-    physics: 16,
-    math: 99999,
-    englishForDevelopment: 12,
-    thai: 8,
-    computer: 4,
-    healthEducation: 4,
-    art: 4,
-    englishMaster: 8,
-    englishTE: 4,
-    library: 4,
-    agriculture: 4,
-    social: 8
+    เคมี: 12,
+    ดาราศาสตร์: 8,
+    ชีวะ: 12,
+    ฟิสิกส์: 16,
+    คณิตศาสตร์: 99999,
+    english_Lolie: 12,
+    ภาษาไทย: 8,
+    คอมพิวเตอร์: 4,
+    สุขศึกษา: 4,
+    ศิลปะ: 4,
+    english_Waranya: 8,
+    english_Teacher: 4,
+    ห้องสมุด: 4,
+    เกษตร: 4,
+    สังคม: 8,
+    แนะแแนว: 4
 };
 
 // Tracker for the number of leaves taken for each course
@@ -34,11 +35,11 @@ function initializeLeaveCounts() {
 
 // Course deductions by day
 const dailyDeductions = {
-    monday: { chemistry: 2, healthEducation: 1, englishMaster: 1, art: 1, thai: 1, social: 1 },
-    tuesday: { englishMaster: 1, chemistry: 1, astronomy: 2, biology: 1, social: 1, math: 1 },
-    wednesday: { physics: 2, math: 1, agriculture: 1, englishTE: 1, library: 1 },
-    thursday: { physics: 2, math: 1, englishForDevelopment: 2 },
-    friday: { biology: 2, thai: 1, englishForDevelopment: 1 }
+    จันทร์: { เคมี: 2, สุขศึกษา: 1, english_Waranya: 1, ศิลปะ: 1, ภาษาไทย: 1, สังคม: 1 },
+    อังคาร: { english_Waranya: 1, เคมี: 1, ดาราศาสตร์: 2, ชีวะ: 1, สังคม: 1, คณิตศาสตร์: 1 },
+    พุธ: { ฟิสิกส์: 2, คณิตศาสตร์: 1, เกษตร: 1, english_Teacher: 1, ห้องสมุด: 1 },
+    พฤหัสบดี: { แนะแแนว: 1, คอมพิวเตอร์: 1, ฟิสิกส์: 2, คณิตศาสตร์: 1, english_Lolie: 2},
+    ศุกร์: { ชีวะ: 2, ภาษาไทย: 1, english_Lolie: 1 }
 };
 
 // Function to update the summary section
@@ -47,7 +48,7 @@ function updateSummary() {
     summaryList.innerHTML = ""; // Clear existing summary
 
     for (let course in leaveLimits) {
-        const remainingLeaves = leaveLimits[course] - leaveCounts[course];
+        const remainingLeaves = leaveLimits[course] - (leaveCounts[course] || 0); // Use 0 if undefined
         
         const summaryItem = document.createElement("li");
         summaryItem.textContent = `${course}: ${remainingLeaves} ครั้งที่สามารถลาได้`;
@@ -60,7 +61,6 @@ function updateSummary() {
 }
 
 // Function to add leave for the selected day
-// Function to add leave for the selected day
 function addLeaveForSelectedDay() {
     const selectedDay = document.getElementById("leave-day").value;
 
@@ -70,7 +70,7 @@ function addLeaveForSelectedDay() {
 
         for (let course in dailyDeductions[selectedDay]) {
             const deduction = dailyDeductions[selectedDay][course];
-            if (leaveCounts[course] + deduction > leaveLimits[course]) {
+            if (leaveCounts[course] !== undefined && leaveCounts[course] + deduction > leaveLimits[course]) {
                 canDeductLeaves = false; // At least one course has reached its limit
                 break; // No need to check further
             }
@@ -80,10 +80,10 @@ function addLeaveForSelectedDay() {
             // If all courses can deduct leaves, proceed with the deductions
             for (let course in dailyDeductions[selectedDay]) {
                 const deduction = dailyDeductions[selectedDay][course];
-                leaveCounts[course] += deduction;
+                leaveCounts[course] = (leaveCounts[course] || 0) + deduction; // Use 0 if undefined
 
                 const listItem = document.createElement("li");
-                listItem.textContent = `Course: ${course}, Day: ${selectedDay.charAt(0).toUpperCase() + selectedDay.slice(1)} (Leaves taken: ${leaveCounts[course]} / ${leaveLimits[course]})`;
+                listItem.textContent = `วิชา: ${course}, วัน: ${selectedDay.charAt(0).toUpperCase() + selectedDay.slice(1)} (ลาไปแล้ว: ${leaveCounts[course]} / ${leaveLimits[course]})`;
 
                 document.getElementById("leave-list").appendChild(listItem);
             }
@@ -97,7 +97,6 @@ function addLeaveForSelectedDay() {
     }
 }
 
-
 // Function to add leave for the selected course
 function addLeaveForSelectedCourse() {
     const selectedCourse = document.getElementById("course").value;
@@ -107,7 +106,7 @@ function addLeaveForSelectedCourse() {
             leaveCounts[selectedCourse] += 1;
 
             const listItem = document.createElement("li");
-            listItem.textContent = `Course: ${selectedCourse} (Leaves taken: ${leaveCounts[selectedCourse]} / ${leaveLimits[selectedCourse]})`;
+            listItem.textContent = `วิชา: ${selectedCourse} (ลาไปแล้ว: ${leaveCounts[selectedCourse]} / ${leaveLimits[selectedCourse]})`;
             
             document.getElementById("leave-list").appendChild(listItem);
             updateSummary();
